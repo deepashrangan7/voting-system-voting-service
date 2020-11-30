@@ -37,12 +37,17 @@ public class VotingDetailsController {
 	}
 
 	@GetMapping("/candidates")
-	public List<Users> getAllCandidates(){
+	public List<Users> getAllCandidates() {
 		return votingDetailService.getAllCandidates();
 	}
-	
+
 	@GetMapping("/status/{user_id}")
-	public Users getVoteStatus(@PathVariable("user_id")Long userId) {
+	public Users getVoteStatus(@PathVariable("user_id") Long userId) {
 		return votingDetailService.isVoteCasted(userId);
+	}
+
+
+	public void setVotingDetailService(VotingDetailService votingDetailService) {
+		this.votingDetailService = votingDetailService;
 	}
 }

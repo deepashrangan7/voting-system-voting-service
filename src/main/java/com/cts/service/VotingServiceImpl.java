@@ -42,11 +42,13 @@ public class VotingServiceImpl implements VotingService {
 			}
 
 		} catch (Exception e) {
-			return new Status(500, "unable to cast vote " + e.getMessage());
 		}
 
 		return new Status(500, "unable to cast vote ");
 	}
 
-	
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
 }

@@ -48,7 +48,7 @@ public class VotingDetailServiceImpl implements VotingDetailService {
 		if (notVoted != null)
 			notVotedCount = Long.valueOf(notVoted.size());
 
-		Long totalNoOfVoters = Long.valueOf(0);
+		Long totalNoOfVoters;
 		Long totalNoOfVotersVoted = Long.valueOf(0);
 
 		if (voted != null)
@@ -63,10 +63,9 @@ public class VotingDetailServiceImpl implements VotingDetailService {
 
 	public Double voteCastedPercentage(VotesCountDetail votesDetail) {
 		if (votesDetail != null) {
-			Double value = (double) (((double) votesDetail.getTotalNoOfVotersVoted())
-					/ ((double) votesDetail.getTotalNoOfVoters())) * 100;
+			return ((((double) votesDetail.getTotalNoOfVotersVoted()) / ((double) votesDetail.getTotalNoOfVoters()))
+					* 100);
 
-			return value;
 		}
 		return null;
 	}
@@ -80,7 +79,7 @@ public class VotingDetailServiceImpl implements VotingDetailService {
 		if (candidate != null) {
 			return candidate.getVoters();
 		}
-		return null;
+		return new ArrayList<Users>();
 	}
 
 	@Override
@@ -121,5 +120,9 @@ public class VotingDetailServiceImpl implements VotingDetailService {
 			}
 		}
 		return null;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 }

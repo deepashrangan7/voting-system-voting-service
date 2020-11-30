@@ -20,11 +20,11 @@ public class CastVoteController {
 
 	@PostMapping("/vote/{user_id}")
 	public Status castVote(@RequestBody Users candidate, @PathVariable("user_id") Long userId) {
-		System.out.println("casting vote try");
 		return votingService.castVote(candidate.getUserId(), userId);
 	}
-	
-	
 
+	public void setVotingService(VotingService votingService) {
+		this.votingService = votingService;
+	}
 
 }
