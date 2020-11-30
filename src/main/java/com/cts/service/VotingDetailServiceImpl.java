@@ -7,16 +7,36 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cts.model.Party;
 import com.cts.model.Users;
 import com.cts.model.VotesCountDetail;
 import com.cts.model.VotesDetail;
 import com.cts.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class VotingDetailServiceImpl implements VotingDetailService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	public List<Users> getAllCandidates() {
+		List<Users> candidates = null;
+		try {
+			candidates = userRepository.findByRole(1);
+			for (Users user : candidates) {
+				Party party = new Party();
+				party.setPartyId(user.getParty().getPartyId());
+				party.setPartyName(user.getParty().getPartyName());
+				user.setParty(party);
+			}
+		} catch (Exception e) {
+			log.error("error while fetching all candidates {}", e.getMessage());
+		}
+		return candidates;
+	}
 
 	public VotesCountDetail getTotalVotesCasted() {
 
@@ -45,6 +65,7 @@ public class VotingDetailServiceImpl implements VotingDetailService {
 		if (votesDetail != null) {
 			Double value = (double) (((double) votesDetail.getTotalNoOfVotersVoted())
 					/ ((double) votesDetail.getTotalNoOfVoters())) * 100;
+
 			return value;
 		}
 		return null;
@@ -85,6 +106,20 @@ public class VotingDetailServiceImpl implements VotingDetailService {
 			}
 			votesDetails.add(voteDetail);
 		}
+		votesDetails.stream().sorted((candidate1, candidate2) -> candidate2.getTotalVotesReceived()
+				.compareTo(candidate1.getTotalVotesReceived()));
 		return votesDetails;
+	}
+
+	@Override
+	public Users isVoteCasted(Long userId) {
+		if (userId != null) {
+			Optional<Users> optionalUser = userRepository.findById(userId);
+			if (optionalUser.isPresent()) {
+				Users user = optionalUser.get();
+				return user.getIsVoted();
+			}
+		}
+		return null;
 	}
 }

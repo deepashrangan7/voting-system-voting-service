@@ -15,4 +15,8 @@ public interface VotingDetailService {
 	public List<Users> getVotersOfACandidate(Long candidateId);
 	
 	public List<VotesDetail> getAllCandidatesVotes();
+
+	public List<Users> getAllCandidates();
+	
+	public Users isVoteCasted(Long userId);
 }

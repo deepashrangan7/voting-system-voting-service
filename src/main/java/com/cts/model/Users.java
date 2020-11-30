@@ -1,6 +1,7 @@
 package com.cts.model;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +17,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
@@ -29,7 +33,8 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Data
+@Getter
+@Setter
 public class Users {
 
 	@Id
@@ -89,9 +94,15 @@ public class Users {
 	public List<Users> getVoters() {
 		return voters;
 	}
-	@JsonIgnore
+	
 	public Party getParty() {
 		return party;
+	}
+
+	@Override
+	public String toString() {
+		return "Users [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password + ", role="
+				+ role + ", active=" + active + ", party=" + party + "]";
 	}
 
 

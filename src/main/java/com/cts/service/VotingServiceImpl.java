@@ -48,4 +48,5 @@ public class VotingServiceImpl implements VotingService {
 		return new Status(500, "unable to cast vote ");
 	}
 
+	
 }

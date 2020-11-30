@@ -17,5 +17,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 	public List<Users> findByIsVotedIsNull();
 
 	public List<Users> findByRole(Integer role);
+	
+	
 
 }
