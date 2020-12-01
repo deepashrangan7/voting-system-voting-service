@@ -39,13 +39,18 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
 		boolean flag = false;
 		String token = null;
-
+		String path = request.getRequestURI();
+		log.info(path);
+		if ("/swagger.html".equals(path)) {
+			filterChain.doFilter(request, response);
+			return;
+		}
 		try {
 			token = request.getHeader("Authorization").substring(7);
 			flag = authenticationFeign.validateToken(request.getHeader("Authorization").toString());
 
 		} catch (Exception e) {
-			log.error("error ocuured {}" , e.getMessage());
+			log.error("error ocuured {}", e.getMessage());
 		}
 		if (flag) {
 
